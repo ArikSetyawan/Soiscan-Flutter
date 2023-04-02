@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:soiscan/Bloc/Authentication/authentication_bloc.dart';
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
@@ -15,7 +15,15 @@ class DashboardPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Text("Helloworld")
+          child: Column(
+            children: [
+              const Text("Helloworld"),
+              ElevatedButton(onPressed: () {
+                context.read<AuthenticationBloc>().add(LogoutEvent());
+              }, 
+              child: const Text('Logout'))
+            ],
+          )
         ),
       ),
     );

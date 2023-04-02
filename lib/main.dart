@@ -1,13 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:soiscan/Bloc/Authentication/authentication_bloc.dart';
 import 'package:soiscan/Pages/dashboardpage.dart';
 import 'package:soiscan/Pages/homepage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soiscan/Pages/loginpage.dart';
+import 'package:soiscan/Pages/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+/// The route configuration.
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      name: 'home',
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const HomePage();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          name: 'login',
+          path: 'login',
+          builder: (BuildContext context, GoRouterState state) {
+            return const LoginPage();
+          },
+        ),
+      ],
+    ),
+    GoRoute(
+      name: 'dashboard',
+      path: '/dashbord',
+      builder: (BuildContext context, GoRouterState state) {
+        return const DashboardPage();
+      },
+    ),
+    GoRoute(
+      name: 'splashscreen',
+      path: '/splash',
+      builder: (BuildContext context, GoRouterState state){
+        return const SplashPage();
+      },
+    ),
+  ],
+  initialLocation: "/splash",
+  debugLogDiagnostics: true,
+  routerNeglect: true
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,35 +57,30 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    GoRouter router = GoRouter(
-      routes: [
-        GoRoute(
-          path: "/",
-          name: "home",
-          builder: (context, state) => const HomePage(),
-          routes: [
-            GoRoute(
-              path: "login",
-              name: "login",
-              builder: (context, state) => const LoginPage(),
-            )
-          ]
-        ),
-        GoRoute(
-          path: "/dashboard",
-          name: "dashboard",
-          builder: (context, state) => const DashboardPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthenticationBloc()..add(ValidationEvent()),
         )
-      ],initialLocation: "/dashboard", routerNeglect: true, debugLogDiagnostics: true
-    );
-    return MaterialApp.router(
-      theme: ThemeData(
-        fontFamily: GoogleFonts.poppins().fontFamily
+      ],
+      child: BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if (state is AuthenticationAutenticated) {
+            _router.goNamed('dashboard');
+          } else if (state is AuthenticationUnautenticated) {
+            _router.goNamed('home');
+          } else if (state is AuthenticationFailed){
+            _router.goNamed('login');
+          } else if (state is AuthenticationLoading){
+            _router.goNamed('splashscreen');
+          }
+        },
+        child: MaterialApp.router(
+          theme: ThemeData(fontFamily: GoogleFonts.poppins().fontFamily),
+          debugShowCheckedModeBanner: false,
+          routerConfig: _router
+        ),
       ),
-      routeInformationParser: router.routeInformationParser,
-      routeInformationProvider: router.routeInformationProvider,
-      routerDelegate: router.routerDelegate,
-      debugShowCheckedModeBanner: false,
     );
   }
 }

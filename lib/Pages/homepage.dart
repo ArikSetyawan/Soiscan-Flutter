@@ -28,34 +28,34 @@ class HomePage extends StatelessWidget {
                   style: TextStyle(fontSize: 15, color: Colors.grey),
                 ),
                 const SizedBox(height: 24,),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 70,
                   child: ElevatedButton(
                     onPressed: (){
                       context.goNamed("login");
-                    }, 
-                    child: const Text("Login", style: TextStyle(fontSize: 20),),
+                    },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       elevation: 0,
                       backgroundColor: darkgreyColor
-                    ),
+                    ), 
+                    child: const Text("Login", style: TextStyle(fontSize: 20),),
                   ),
                 ),
                 const SizedBox(height: 20,),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 70,
                   child: ElevatedButton(
-                    onPressed: (){}, 
-                    child: Text("Signup", style: TextStyle(fontSize: 20, color: darkgreyColor),),
+                    onPressed: (){},
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       elevation: 0,
                       backgroundColor: Colors.white,
                       side: BorderSide(width: 2, color: darkgreyColor)                  
-                    ),
+                    ), 
+                    child: Text("Signup", style: TextStyle(fontSize: 20, color: darkgreyColor),),
                   ),
                 ),
                 const SizedBox(height: 16,),
