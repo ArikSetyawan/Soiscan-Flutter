@@ -21,14 +21,6 @@ class AuthenticationAutenticated extends AuthenticationState {
 
 class AuthenticationUnautenticated extends AuthenticationState {}
 
-class AuthenticationFailed extends AuthenticationState {
-  final String message;
-
-  const AuthenticationFailed(this.message);
-  @override
-  List<Object> get props => [message];
-}
-
 class AuthenticationError extends AuthenticationState {
   final String message;
 

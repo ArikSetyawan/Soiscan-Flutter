@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:soiscan/Bloc/Authentication/authentication_bloc.dart';
+import 'package:soiscan/Bloc/Login/login_bloc.dart';
 import 'package:soiscan/Pages/dashboardpage.dart';
 import 'package:soiscan/Pages/homepage.dart';
 import 'package:go_router/go_router.dart';
@@ -61,6 +62,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => AuthenticationBloc()..add(ValidationEvent()),
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(),
         )
       ],
       child: BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -69,9 +73,7 @@ class MyApp extends StatelessWidget {
             _router.goNamed('dashboard');
           } else if (state is AuthenticationUnautenticated) {
             _router.goNamed('home');
-          } else if (state is AuthenticationFailed){
-            _router.goNamed('login');
-          } else if (state is AuthenticationLoading){
+          }  else if (state is AuthenticationLoading){
             _router.goNamed('splashscreen');
           }
         },
