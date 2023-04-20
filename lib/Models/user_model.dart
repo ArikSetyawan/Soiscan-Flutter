@@ -9,29 +9,29 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
-  UserModel({
-    required this.email,
-    required this.nik,
-    required this.name,
-    required this.password,
-    required this.phone,
-    required this.photo,
-    required this.status,
-    required this.tagid,
-    required this.userId,
-  });
+    UserModel({
+        required this.email,
+        required this.nik,
+        required this.name,
+        required this.password,
+        required this.phone,
+        required this.photo,
+        required this.status,
+        required this.tagid,
+        required this.userId,
+    });
 
-  String email;
-  int nik;
-  String name;
-  String password;
-  int phone;
-  String photo;
-  String status;
-  String tagid;
-  String userId;
+    String email;
+    String nik;
+    String name;
+    String password;
+    String phone;
+    String photo;
+    String status;
+    String tagid;
+    String userId;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+    factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         email: json["Email"],
         nik: json["NIK"],
         name: json["Name"],
@@ -41,9 +41,9 @@ class UserModel {
         status: json["Status"],
         tagid: json["Tagid"],
         userId: json["UserID"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "Email": email,
         "NIK": nik,
         "Name": name,
@@ -53,5 +53,5 @@ class UserModel {
         "Status": status,
         "Tagid": tagid,
         "UserID": userId,
-      };
+    };
 }
