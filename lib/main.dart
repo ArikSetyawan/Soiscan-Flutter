@@ -7,6 +7,7 @@ import 'package:soiscan/Pages/dashboardpage.dart';
 import 'package:soiscan/Pages/homepage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soiscan/Pages/loginpage.dart';
+import 'package:soiscan/Pages/searchpage.dart';
 import 'package:soiscan/Pages/splash_page.dart';
 
 void main() {
@@ -37,6 +38,13 @@ final GoRouter _router = GoRouter(
       path: '/dashbord',
       builder: (BuildContext context, GoRouterState state) {
         return const DashboardPage();
+      },
+    ),
+    GoRoute(
+      name: 'search',
+      path: '/search',
+      builder: (BuildContext context, GoRouterState state) {
+        return const SearchPage();
       },
     ),
     GoRoute(
