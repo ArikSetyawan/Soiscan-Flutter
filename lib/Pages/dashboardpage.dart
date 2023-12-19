@@ -115,7 +115,7 @@ class DashboardPage extends StatelessWidget {
                                 onPressed: () {
                                   context.read<AuthenticationBloc>().add(LogoutEvent());
                                 }, 
-                                child: const Text('Logout')
+                                child: const Text('Logout', style: TextStyle(color: Colors.white),)
                               ),
                             )
                           ],
@@ -151,7 +151,7 @@ class DashboardPage extends StatelessWidget {
                         const Text("Show the QR code below to the person you meet with", style: TextStyle(color: Colors.grey, fontSize: 16),),
                         const SizedBox(height: 15,),
                         Center(
-                          child: QrImage(
+                          child: QrImageView(
                             data: "47128947128942",
                             size: 200,
                           ),

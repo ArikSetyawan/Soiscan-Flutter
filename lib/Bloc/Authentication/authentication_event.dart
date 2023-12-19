@@ -8,7 +8,7 @@ abstract class AuthenticationEvent extends Equatable {
 }
 
 class UserLoginEvent extends AuthenticationEvent {
-  final UserModel user;
+  final User user;
 
   const UserLoginEvent(this.user);
   @override

@@ -12,7 +12,7 @@ import 'package:soiscan/Pages/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
-}
+}x
 
 /// The route configuration.
 final GoRouter _router = GoRouter(
@@ -28,7 +28,7 @@ final GoRouter _router = GoRouter(
           name: 'login',
           path: 'login',
           builder: (BuildContext context, GoRouterState state) {
-            return const LoginPage();
+            return LoginPage();
           },
         ),
       ],

@@ -12,7 +12,7 @@ class AuthenticationInitial extends AuthenticationState {}
 class AuthenticationLoading extends AuthenticationState {}
 
 class AuthenticationAutenticated extends AuthenticationState {
-  final UserModel user;
+  final User user;
 
   const AuthenticationAutenticated(this.user);
   @override

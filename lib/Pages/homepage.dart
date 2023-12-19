@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                         elevation: 0,
                         backgroundColor: darkgreyColor
                       ), 
-                      child: const Text("Login", style: TextStyle(fontSize: 20),),
+                      child: const Text("Login", style: TextStyle(fontSize: 20, color: Colors.white),),
                     ),
                   ),
                   const SizedBox(height: 20,),
