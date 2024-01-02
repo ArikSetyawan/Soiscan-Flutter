@@ -49,7 +49,9 @@ class HomePage extends StatelessWidget {
                     width: double.infinity,
                     height: 70,
                     child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        context.goNamed("signup");
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                         elevation: 0,

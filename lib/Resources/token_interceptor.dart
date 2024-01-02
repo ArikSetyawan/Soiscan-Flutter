@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenInterceptor extends QueuedInterceptor {
   final Dio _dio;
-  final String _refreshTokenUrl = "https://soiscan.mastya.my.id/api/refresh_token";
+  final String _baseURL = dotenv.env['APIURL']!;
 
   TokenInterceptor(this._dio);
 
@@ -28,7 +29,7 @@ class TokenInterceptor extends QueuedInterceptor {
     final prefs = await SharedPreferences.getInstance();
     final String refreshToken = prefs.getString("refresh_token")!;
     // Make Request for new Access Token
-    var request = http.Request('GET',Uri.parse(_refreshTokenUrl));
+    var request = http.Request('GET',Uri.parse("${_baseURL}refresh_token"));
     request.headers['Token'] = refreshToken;
     
     // Response

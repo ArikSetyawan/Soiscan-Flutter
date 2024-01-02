@@ -41,13 +41,21 @@ class DioExceptions implements Exception {
   String _handleError(int? statusCode, Map<String,dynamic> error) {
     switch (statusCode) {
       case 400:
-        return 'Bad request';
+        try {
+          return error['message'];
+        } catch (e) {
+          return 'Bad request';
+        }
       case 401:
         return error['message'];
       case 403:
         return 'Forbidden';
       case 404:
-        return "Resource Not Found";
+        try {
+          return error['message'];
+        } catch (e) {
+          return "Resource Not Found";
+        }
       case 417:
         return "User Tidak Ditemukan";
       case 500:

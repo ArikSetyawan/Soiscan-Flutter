@@ -4,19 +4,25 @@
 
 import 'dart:convert';
 
+import 'package:isar/isar.dart';
+
+part 'user.g.dart';
+
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 String userToJson(User data) => json.encode(data.toJson());
 
+@collection
 class User {
+    Id id = Isar.autoIncrement;
     final String email;
     final int nik;
     final String name;
     final String password;
-    final int phone;
+    final int? phone;
     final String photo;
     final String status;
-    final String tagid;
+    final String? tagid;
     final String userId;
 
     User({
