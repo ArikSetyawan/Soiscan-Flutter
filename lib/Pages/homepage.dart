@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                         elevation: 0,
                         backgroundColor: darkgreyColor
                       ), 
-                      child: const Text("Login", style: TextStyle(fontSize: 20),),
+                      child: const Text("Login", style: TextStyle(fontSize: 20, color: Colors.white),),
                     ),
                   ),
                   const SizedBox(height: 20,),
@@ -49,7 +49,9 @@ class HomePage extends StatelessWidget {
                     width: double.infinity,
                     height: 70,
                     child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        context.goNamed("signup");
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                         elevation: 0,

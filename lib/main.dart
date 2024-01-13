@@ -1,16 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:soiscan/Bloc/Authentication/authentication_bloc.dart';
+import 'package:soiscan/Bloc/History/history_bloc.dart';
+import 'package:soiscan/Bloc/Homepage/homepage_bloc.dart';
+import 'package:soiscan/Bloc/Interaction/interaction_bloc.dart';
+import 'package:soiscan/Bloc/Location/location_bloc.dart';
 import 'package:soiscan/Bloc/Login/login_bloc.dart';
+import 'package:soiscan/Bloc/Registration/registration_bloc.dart';
+import 'package:soiscan/Models/user.dart';
+import 'package:soiscan/Pages/accountpage.dart';
 import 'package:soiscan/Pages/dashboardpage.dart';
+import 'package:soiscan/Pages/historypage.dart';
 import 'package:soiscan/Pages/homepage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soiscan/Pages/loginpage.dart';
+import 'package:soiscan/Pages/scanneduserpage.dart';
+import 'package:soiscan/Pages/scanpage.dart';
 import 'package:soiscan/Pages/searchpage.dart';
+import 'package:soiscan/Pages/signup.dart';
 import 'package:soiscan/Pages/splash_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Open Isar
+  final dir = await getApplicationDocumentsDirectory();
+  await Isar.open(
+    [UserSchema],
+    inspector: true,
+    directory: dir.path
+  );
+
+  // Load .env
+  await dotenv.load(fileName: ".env");
+
+  
   runApp(const MyApp());
 }
 
@@ -28,7 +56,14 @@ final GoRouter _router = GoRouter(
           name: 'login',
           path: 'login',
           builder: (BuildContext context, GoRouterState state) {
-            return const LoginPage();
+            return LoginPage();
+          },
+        ),
+        GoRoute(
+          name: 'signup',
+          path: 'signup',
+          builder: (BuildContext context, GoRouterState state) {
+            return SignupPage();
           },
         ),
       ],
@@ -45,6 +80,38 @@ final GoRouter _router = GoRouter(
       path: '/search',
       builder: (BuildContext context, GoRouterState state) {
         return const SearchPage();
+      },
+    ),
+    GoRoute(
+      name: 'scan',
+      path: '/scan',
+      builder: (context, state) {
+        return const ScanPage();
+      },
+      routes: [
+        GoRoute(
+          name: 'scannedUser',
+          path: 'user',
+          builder: (context, state) {
+            return ScannedUserPage(
+              userID: state.uri.queryParameters['UserID']!,
+            );
+          },
+        )
+      ]
+    ),
+    GoRoute(
+      name: 'history',
+      path: '/history',
+      builder: (context, state) {
+        return const HistoryPage();
+      },
+    ),
+    GoRoute(
+      name: 'account',
+      path: '/account',
+      builder: (context, state) {
+        return const AccountPage();
       },
     ),
     GoRoute(
@@ -73,11 +140,27 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LoginBloc(),
+        ),
+        BlocProvider(
+          create: (context) => HomepageBloc(),
+        ),
+        BlocProvider(
+          create: (context) => InteractionBloc(),
+        ),
+        BlocProvider(
+          create: (context) => LocationBloc(),
+        ),
+        BlocProvider(
+          create: (context) => HistoryBloc(),
+        ),
+        BlocProvider(
+          create: (context) => RegistrationBloc(),
         )
       ],
       child: BlocListener<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
           if (state is AuthenticationAutenticated) {
+            context.read<LocationBloc>().add(GetDeviceLocation());
             _router.goNamed('dashboard');
           } else if (state is AuthenticationUnautenticated) {
             _router.goNamed('home');

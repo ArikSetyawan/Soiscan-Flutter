@@ -4,9 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:soiscan/Bloc/Authentication/authentication_bloc.dart';
 import 'package:soiscan/Bloc/Login/login_bloc.dart';
 import 'package:soiscan/theme.dart';
+import 'package:email_validator/email_validator.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,7 @@ class LoginPage extends StatelessWidget {
                   child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Form(
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -64,23 +70,37 @@ class LoginPage extends StatelessWidget {
                           height: 30,
                         ),
                         TextFormField(
+                          controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15)),
                             labelText: "Email",
                           ),
+                          validator: (value) {
+                            if (value != null && EmailValidator.validate(value)) {
+                              return null;
+                            } else {
+                              return "Please enter a valid email";
+                            }
+                          },
                         ),
                         const SizedBox(
                           height: 15,
                         ),
                         TextFormField(
+                          controller: _passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15)),
                             labelText: "Password",
                           ),
+                          validator: (value) {
+                            return (value == null || value.isEmpty)
+                                ? "Please Enter Some Text"
+                                : null;
+                          },
                         ),
                         const SizedBox(
                           height: 20,
@@ -97,8 +117,11 @@ class LoginPage extends StatelessWidget {
                               } else {
                                 return ElevatedButton(
                                   onPressed: () {
-                                    context.read<LoginBloc>().add(
-                                        const LoginWithEmailPasswordEvent("arik@gmail.com", "123"));
+                                    final isvalid = _formKey.currentState!.validate();
+                                    if (isvalid) {
+                                      context.read<LoginBloc>().add(
+                                        LoginWithEmailPasswordEvent(_emailController.text, _passwordController.text));
+                                    }
                                   },
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
@@ -107,7 +130,7 @@ class LoginPage extends StatelessWidget {
                                       backgroundColor: darkgreyColor),
                                   child: const Text(
                                     "Login",
-                                    style: TextStyle(fontSize: 20),
+                                    style: TextStyle(fontSize: 20, color: Colors.white),
                                   ),
                                 );
                               }

@@ -24,13 +24,13 @@ class SearchPage extends StatelessWidget {
                 context.goNamed('search');
                 break;
               case 2:
-                context.goNamed('search');
+                context.goNamed('scan');
                 break;
               case 3:
-                context.goNamed('search');
+                context.goNamed('history');
                 break;
               case 4:
-                context.goNamed('search');
+                context.goNamed('account');
                 break;
             }
           }
@@ -72,8 +72,15 @@ class SearchPage extends StatelessWidget {
           ),
         ],
       ),
-      body: const SafeArea(
-        child: Text("Helloworld"),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Image.asset("assets/images/underconstruction.jpg"),
+              const Text("This Feature is unavailable.")
+            ],
+          ),
+        ),
       ),
     );
   }
