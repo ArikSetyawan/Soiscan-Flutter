@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:soiscan/Bloc/Authentication/authentication_bloc.dart';
 import 'package:soiscan/Bloc/Login/login_bloc.dart';
 import 'package:soiscan/theme.dart';
@@ -34,7 +35,10 @@ class LoginPage extends StatelessWidget {
           body: BlocListener<LoginBloc, LoginState>(
             listener: (context, state) {
               if (state is LoginFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+                Fluttertoast.showToast(
+                  msg: state.errorMessage,
+                  gravity: ToastGravity.TOP
+                );
               }
               if (state is LoginSuccess) {
                 context.read<AuthenticationBloc>().add(UserLoginEvent(state.user));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soiscan/Bloc/Interaction/interaction_bloc.dart';
@@ -30,7 +31,10 @@ class _ScannedUserPageState extends State<ScannedUserPage> {
     return BlocListener<InteractionBloc, InteractionState>(
       listener: (context, state) {
         if (state is InteractionCreated) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Interaction Created")));
+          Fluttertoast.showToast(
+            msg: "Interaction Created",
+            gravity: ToastGravity.TOP
+          );
           context.goNamed("dashboard");
         }
       },
