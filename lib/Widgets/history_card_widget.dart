@@ -29,7 +29,7 @@ class HistoryCard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(interaction.interaction.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+                            SizedBox(width: 150, child: Text(interaction.interaction.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500))),
                             const SizedBox(width: 5),
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 5),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:soiscan/Bloc/Registration/registration_bloc.dart';
 import 'package:soiscan/theme.dart';
@@ -35,10 +36,16 @@ class SignupPage extends StatelessWidget {
           body: BlocListener<RegistrationBloc, RegistrationState>(
             listener: (context, state) {
               if (state is RegistrationFailed) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+                Fluttertoast.showToast(
+                  msg: state.message,
+                  gravity: ToastGravity.TOP
+                );
               }
               if (state is RegistrationSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Sign-up Success")));
+                Fluttertoast.showToast(
+                  msg: "Sign-up Success",
+                  gravity: ToastGravity.TOP
+                );
                 context.goNamed("login");
               }
             },
