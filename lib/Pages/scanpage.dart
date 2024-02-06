@@ -22,7 +22,10 @@ class _ScanPageState extends State<ScanPage> {
         onDetect: (barcodes) {
           final value = barcodes.barcodes.first.rawValue;
           if (value != null) {
-            context.goNamed('scannedUser', queryParameters: {"UserID":value});
+            _mobileScannerController.stop();
+            context.pushNamed('scannedUser', queryParameters: {"UserID":value}).then((value) {
+              _mobileScannerController.start();
+            });
           }
         },
       )

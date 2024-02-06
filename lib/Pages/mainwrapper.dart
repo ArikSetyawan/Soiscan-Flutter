@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+// import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:soiscan/theme.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -29,51 +29,92 @@ class _MainWrapperState extends State<MainWrapper> {
         height: double.infinity,
         child: widget.navigationShell,
       ),
-      bottomNavigationBar: SalomonBottomBar(
-        backgroundColor: Colors.white,
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-          _goBranch(index);
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: darkgreyColor,
+        shape: const CircleBorder(),
+        onPressed: () {
+          context.pushNamed('scan');
         },
-        items: [
-          SalomonBottomBarItem(
-            icon: const Icon(Icons.window),
-            title: const Text("Home"),
-            selectedColor: darkgreyColor,
-          ),
-    
-          /// Likes
-          SalomonBottomBarItem(
-            icon: const Icon(Icons.search),
-            title: const Text("Search"),
-            selectedColor: darkgreyColor,
-          ),
-    
-          /// Likes
-          SalomonBottomBarItem(
-            icon: const Icon(Icons.add_circle_outline),
-            title: const Text("Scan"),
-            selectedColor: darkgreyColor,
-          ),
-    
-          /// Search
-          SalomonBottomBarItem(
-            icon: const Icon(Icons.query_builder),
-            title: const Text("History"),
-            selectedColor: darkgreyColor,
-          ),
-    
-          /// Profile
-          SalomonBottomBarItem(
-            icon: const Icon(Icons.person),
-            title: const Text("Profile"),
-            selectedColor: darkgreyColor,
-          ),
-        ],
-      )
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        height: 60,
+        color: Colors.white,
+        surfaceTintColor: Colors.white,
+        shadowColor: Colors.white,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 5,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.window,
+                color: _currentIndex == 0 ? darkgreyColor : Colors.grey,
+              ),
+              onPressed: () {
+                int index = 0;
+                setState(() {
+                  _currentIndex = index;
+                });
+                _goBranch(index);
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: _currentIndex == 1 ? darkgreyColor : Colors.grey,
+              ),
+              onPressed: () {
+                int index = 1;
+                setState(() {
+                  _currentIndex = index;
+                });
+                _goBranch(index);
+              },
+            ),
+            Opacity(
+              opacity: 0,
+              child: IconButton(
+                icon: Icon(
+                  Icons.camera_alt,
+                  color: _currentIndex == 0 ? darkgreyColor : Colors.grey,
+                ),
+                onPressed: () {},
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.query_builder,
+                color: _currentIndex == 2 ? darkgreyColor : Colors.grey,
+              ),
+              onPressed: () {
+                int index = 2;
+                setState(() {
+                  _currentIndex = index;
+                });
+                _goBranch(index);
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.person,
+                color: _currentIndex == 3 ? darkgreyColor : Colors.grey,
+              ),
+              onPressed: () {
+                int index = 3;
+                setState(() {
+                  _currentIndex = index;
+                });
+                _goBranch(index);
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

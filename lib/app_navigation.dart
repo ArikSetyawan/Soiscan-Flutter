@@ -19,7 +19,6 @@ class AppNavigation {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
   static final _shellNavigatorHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
   static final _shellNavigationSearch = GlobalKey<NavigatorState>(debugLabel: 'shellSearch');
-  static final _shellNavigationScan = GlobalKey<NavigatorState>(debugLabel: 'shellScan');
   static final _shellNavigatorHistory = GlobalKey<NavigatorState>(debugLabel: 'shellHistory');
   static final _shellNavigationUser = GlobalKey<NavigatorState>(debugLabel: 'shellUser');
 
@@ -61,6 +60,20 @@ class AppNavigation {
           ),
         ],
       ),
+      GoRoute(
+        name: 'scan',
+        path: '/scan',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const ScanPage(),
+        routes: [
+          GoRoute(
+            name: 'scannedUser',
+            path: 'user',
+            parentNavigatorKey: _rootNavigatorKey,
+            builder: (context, state) => ScannedUserPage(userID: state.uri.queryParameters['UserID']!)
+          )
+        ]
+      ),
       // MainWrapper
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) => MainWrapper(navigationShell: navigationShell),
@@ -86,25 +99,6 @@ class AppNavigation {
                 path: '/search',
                 builder: (BuildContext context, GoRouterState state) => const SearchPage()
               ),              
-            ]
-          ),
-
-          /// Brach Scan
-          StatefulShellBranch(
-            navigatorKey: _shellNavigationScan,
-            routes: <RouteBase>[
-              GoRoute(
-                name: 'scan',
-                path: '/scan',
-                builder: (context, state) => const ScanPage(),
-                routes: [
-                  GoRoute(
-                    name: 'scannedUser',
-                    path: 'user',
-                    builder: (context, state) => ScannedUserPage(userID: state.uri.queryParameters['UserID']!)
-                  )
-                ]
-              ),
             ]
           ),
 
