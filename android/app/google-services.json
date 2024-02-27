@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "642314366675",
+    "project_id": "soiscan-858cc",
+    "storage_bucket": "soiscan-858cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642314366675:android:751306728916b53f17ae26",
+        "android_client_info": {
+          "package_name": "id.mastya.soiscan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPi9bvLRiG8H7g9whJZflj4M53HjX8iUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
