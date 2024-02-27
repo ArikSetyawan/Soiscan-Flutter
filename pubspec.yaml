@@ -34,6 +34,8 @@ dependencies:
   dio: ^5.4.0
   email_validator: ^2.1.17
   equatable: ^2.0.5
+  firebase_core: ^2.25.4
+  firebase_messaging: ^14.7.16
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
